@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QGraphicsScene>
 
 #include "View.h"
 
@@ -14,9 +13,22 @@ private:
     QGraphicsScene *scene;
     View *view;
 
+    QToolBar *toolBar;
+
+    QAction *setStartAction;
+    QAction *setDestinationAction;
+
+    void setupGraphicView();
+    void setupActions();
+    void setupToolBar();
+
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+public slots:
+    void setStart();
+    void setDestination();
 };
 
 #endif // MAINWINDOW_H
