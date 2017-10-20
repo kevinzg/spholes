@@ -3,9 +3,11 @@
 
 #include <QToolBar>
 #include <QAction>
+#include <QActionGroup>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+    : QMainWindow(parent),
+      currentMode(InteractionMode::NoInteraction)
 {
     this->setupGraphicView();
     this->setupActions();
@@ -27,26 +29,32 @@ void MainWindow::setupGraphicView()
 
 void MainWindow::setupActions()
 {
-    setStartAction = new QAction(tr("Set Start Point"), this);
-    connect(setStartAction, SIGNAL(triggered()), this, SLOT(setStart()));
+    this->actions = new QActionGroup(this);
 
-    setDestinationAction = new QAction(tr("Set Destination Point"), this);
-    connect(setDestinationAction, SIGNAL(triggered()), this, SLOT(setDestination()));
+    QAction *setStartAction = new QAction(tr("Set Start Point"), this);
+    setStartAction->setCheckable(true);
+    setStartAction->setData(QVariant(InteractionMode::SetStart));
+
+    QAction *setDestinationAction = new QAction(tr("Set Destination Point"), this);
+    setDestinationAction->setCheckable(true);
+    setDestinationAction->setData(QVariant(InteractionMode::SetDestination));
+
+    actions->addAction(setStartAction);
+    actions->addAction(setDestinationAction);
+
+    connect(actions, &QActionGroup::triggered,
+            this, &MainWindow::changeInteractionMode);
 }
 
 void MainWindow::setupToolBar()
 {
-    toolBar = new QToolBar;
+    QToolBar *toolBar = new QToolBar(this);
     this->addToolBar(toolBar);
 
-    toolBar->addAction(setStartAction);
-    toolBar->addAction(setDestinationAction);
+    toolBar->addActions(actions->actions());
 }
 
-void MainWindow::setStart()
+void MainWindow::changeInteractionMode(QAction *action)
 {
-}
-
-void MainWindow::setDestination()
-{
+    currentMode = static_cast<InteractionMode>(action->data().value<int>());
 }

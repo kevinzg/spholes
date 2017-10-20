@@ -2,8 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
 #include "View.h"
+
+class QActionGroup;
 
 class MainWindow : public QMainWindow
 {
@@ -13,22 +14,28 @@ private:
     QGraphicsScene *scene;
     View *view;
 
-    QToolBar *toolBar;
-
-    QAction *setStartAction;
-    QAction *setDestinationAction;
+    QActionGroup *actions;
 
     void setupGraphicView();
     void setupActions();
     void setupToolBar();
+
+    enum InteractionMode
+    {
+        NoInteraction,
+        SetStart,
+        SetDestination,
+        AddNewPolygon
+    };
+
+    InteractionMode currentMode;
 
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
 public slots:
-    void setStart();
-    void setDestination();
+    void changeInteractionMode(QAction *);
 };
 
 #endif // MAINWINDOW_H
