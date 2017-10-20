@@ -20,7 +20,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::setupGraphicView()
 {
-    scene = new QGraphicsScene(this);
+    scene = new Scene(this);
 
     view = new View(tr("Euclidean Shortest Path"), this);
     view->view()->setScene(scene);

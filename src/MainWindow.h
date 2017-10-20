@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "View.h"
+#include "Scene.h"
 
 class QActionGroup;
 
@@ -11,7 +12,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-    QGraphicsScene *scene;
+    Scene *scene;
     View *view;
 
     QActionGroup *actions;

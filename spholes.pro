@@ -28,11 +28,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     src/main.cpp \
     src/MainWindow.cpp \
-    src/View.cpp
+    src/View.cpp \
+    src/Scene.cpp
 
 HEADERS += \
     src/MainWindow.h \
-    src/View.h
+    src/View.h \
+    src/Scene.h
 
 RESOURCES += \
     resources/images.qrc
