@@ -33,3 +33,6 @@ SOURCES += \
 HEADERS += \
     src/MainWindow.h \
     src/View.h
+
+RESOURCES += \
+    resources/images.qrc
