@@ -5,6 +5,8 @@
 #-------------------------------------------------
 
 QT       += core gui
+qtHaveModule(printsupport): QT += printsupport
+qtHaveModule(opengl): QT += opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,7 +27,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     src/main.cpp \
-    src/MainWindow.cpp
+    src/MainWindow.cpp \
+    src/View.cpp
 
 HEADERS += \
-    src/MainWindow.h
+    src/MainWindow.h \
+    src/View.h
