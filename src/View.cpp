@@ -48,7 +48,7 @@
 **
 ****************************************************************************/
 
-#include "view.h"
+#include "View.h"
 
 #if defined(QT_PRINTSUPPORT_LIB)
 #include <QtPrintSupport/qtprintsupportglobal.h>
