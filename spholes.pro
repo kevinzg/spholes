@@ -29,12 +29,14 @@ SOURCES += \
     src/main.cpp \
     src/MainWindow.cpp \
     src/View.cpp \
-    src/Scene.cpp
+    src/Scene.cpp \
+    src/PointItem.cpp
 
 HEADERS += \
     src/MainWindow.h \
     src/View.h \
-    src/Scene.h
+    src/Scene.h \
+    src/PointItem.h
 
 RESOURCES += \
     resources/images.qrc
