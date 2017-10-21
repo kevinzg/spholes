@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "View.h"
 #include "Scene.h"
+#include "PointItem.h"
 
 class QActionGroup;
 
@@ -18,6 +19,7 @@ private:
     QActionGroup *actions;
 
     void setupGraphicView();
+    void setupGraphicItems();
     void setupActions();
     void setupToolBar();
 
@@ -31,12 +33,16 @@ private:
 
     InteractionMode currentMode;
 
+    PointItem *startPoint;
+    PointItem *destinationPoint;
+
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
 public slots:
     void changeInteractionMode(QAction *);
+    void scenePointClicked(QPointF);
 };
 
 #endif // MAINWINDOW_H

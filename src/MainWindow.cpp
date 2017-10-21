@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
       currentMode(InteractionMode::NoInteraction)
 {
     this->setupGraphicView();
+    this->setupGraphicItems();
     this->setupActions();
     this->setupToolBar();
 }
@@ -25,6 +26,23 @@ void MainWindow::setupGraphicView()
     view = new View(tr("Euclidean Shortest Path"), this);
     view->view()->setScene(scene);
     this->setCentralWidget(view);
+
+    connect(scene, &Scene::pointClicked,
+            this, &MainWindow::scenePointClicked);
+}
+
+void MainWindow::setupGraphicItems()
+{
+    startPoint = new PointItem;
+    startPoint->setColor(Qt::blue);
+    startPoint->setVisible(false);
+
+    destinationPoint = new PointItem;
+    destinationPoint->setColor(Qt::red);
+    destinationPoint->setVisible(false);
+
+    scene->addItem(startPoint);
+    scene->addItem(destinationPoint);
 }
 
 void MainWindow::setupActions()
@@ -57,4 +75,22 @@ void MainWindow::setupToolBar()
 void MainWindow::changeInteractionMode(QAction *action)
 {
     currentMode = static_cast<InteractionMode>(action->data().value<int>());
+}
+
+void MainWindow::scenePointClicked(QPointF point)
+{
+    switch(currentMode)
+    {
+    case SetStart:
+        startPoint->setPos(point);
+        startPoint->setVisible(true);
+        break;
+    case SetDestination:
+        destinationPoint->setPos(point);
+        destinationPoint->setVisible(true);
+        break;
+    case NoInteraction:
+    default:
+        break;
+    }
 }
