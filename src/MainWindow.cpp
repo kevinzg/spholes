@@ -81,11 +81,17 @@ void MainWindow::setupActions()
     connect(actions, &QActionGroup::triggered,
             this, &MainWindow::changeInteractionMode);
 
-    stopAction = new QAction(tr("Cancel/Stop"), this);
+    stopAction = new QAction(tr("Close Polygon"), this);
     stopAction->setEnabled(false);
 
     connect(stopAction, &QAction::triggered,
             this, &MainWindow::stopActionTriggered);
+
+    cancelAction = new QAction(tr("Cancel"), this);
+    cancelAction->setEnabled(false);
+
+    connect(cancelAction, &QAction::triggered,
+            this, &MainWindow::cancelActionTriggered);
 }
 
 void MainWindow::setupToolBar()
@@ -95,6 +101,7 @@ void MainWindow::setupToolBar()
 
     toolBar->addActions(actions->actions());
     toolBar->addAction(stopAction);
+    toolBar->addAction(cancelAction);
 }
 
 void MainWindow::clearInteractionMode()
@@ -102,6 +109,10 @@ void MainWindow::clearInteractionMode()
     actions->checkedAction()->setChecked(false);
     actions->setEnabled(true);
     stopAction->setEnabled(false);
+    cancelAction->setEnabled(false);
+
+    newPolygon->setVisible(false);
+
     currentMode = NoInteraction;
 }
 
@@ -124,13 +135,23 @@ void MainWindow::changeInteractionMode(QAction *action)
 {
     currentMode = static_cast<InteractionMode>(action->data().value<int>());
     actions->setEnabled(false);
-    stopAction->setEnabled(true);
+    cancelAction->setEnabled(true);
+    if (currentMode == AddNewPolygon)
+        stopAction->setEnabled(true);
 }
 
 void MainWindow::stopActionTriggered()
 {
     if (currentMode == AddNewPolygon)
         ; // Do stuff
+
+    clearInteractionMode();
+}
+
+void MainWindow::cancelActionTriggered()
+{
+    if (currentMode == AddNewPolygon)
+        newPolygonPath->setPath(QPainterPath());
 
     clearInteractionMode();
 }
