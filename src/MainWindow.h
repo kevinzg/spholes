@@ -41,6 +41,8 @@ private:
     PointItem *startPoint;
     PointItem *destinationPoint;
 
+    QGraphicsItemGroup *obstacleGroup;
+
     QGraphicsItemGroup *newPolygon;
     PointItem *newPolygonStartPoint;
     QGraphicsPathItem *newPolygonPath;

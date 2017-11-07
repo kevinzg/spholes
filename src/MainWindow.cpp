@@ -41,6 +41,8 @@ void MainWindow::setupGraphicItems()
     destinationPoint->setColor(Qt::red);
     destinationPoint->setVisible(false);
 
+    obstacleGroup = new QGraphicsItemGroup;
+
     newPolygon = new QGraphicsItemGroup;
     newPolygon->setVisible(false);
 
@@ -55,6 +57,7 @@ void MainWindow::setupGraphicItems()
 
     scene->addItem(startPoint);
     scene->addItem(destinationPoint);
+    scene->addItem(obstacleGroup);
     scene->addItem(newPolygon);
 }
 
@@ -143,7 +146,13 @@ void MainWindow::changeInteractionMode(QAction *action)
 void MainWindow::stopActionTriggered()
 {
     if (currentMode == AddNewPolygon)
-        ; // Do stuff
+    {
+        QGraphicsPolygonItem *obstacle = new QGraphicsPolygonItem(newPolygonPath->path().toFillPolygon());
+        obstacle->setPen(QPen(Qt::red));
+        obstacleGroup->addToGroup(obstacle);
+
+        newPolygonPath->setPath(QPainterPath());
+    }
 
     clearInteractionMode();
 }
