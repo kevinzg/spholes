@@ -30,13 +30,15 @@ SOURCES += \
     src/MainWindow.cpp \
     src/View.cpp \
     src/Scene.cpp \
-    src/PointItem.cpp
+    src/PointItem.cpp \
+    src/Style.cpp
 
 HEADERS += \
     src/MainWindow.h \
     src/View.h \
     src/Scene.h \
-    src/PointItem.h
+    src/PointItem.h \
+    src/Style.h
 
 RESOURCES += \
     resources/images.qrc

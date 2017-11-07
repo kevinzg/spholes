@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "View.h"
+#include "Style.h"
 
 #include <QToolBar>
 #include <QAction>
@@ -34,11 +35,11 @@ void MainWindow::setupGraphicView()
 void MainWindow::setupGraphicItems()
 {
     startPoint = new PointItem;
-    startPoint->setColor(Qt::blue);
+    startPoint->setColor(Style::startPointColor);
     startPoint->setVisible(false);
 
     destinationPoint = new PointItem;
-    destinationPoint->setColor(Qt::red);
+    destinationPoint->setColor(Style::destinationPointColor);
     destinationPoint->setVisible(false);
 
     obstacleGroup = new QGraphicsItemGroup;
@@ -47,10 +48,10 @@ void MainWindow::setupGraphicItems()
     newPolygon->setVisible(false);
 
     newPolygonStartPoint = new PointItem;
-    newPolygonStartPoint->setColor(Qt::black);
+    newPolygonStartPoint->setColor(Style::newPolygonStartPointColor);
 
     newPolygonPath = new QGraphicsPathItem;
-    newPolygonPath->setPen(QPen(Qt::black));
+    newPolygonPath->setPen(Style::newPolygonPen);
 
     newPolygon->addToGroup(newPolygonStartPoint);
     newPolygon->addToGroup(newPolygonPath);
@@ -148,7 +149,8 @@ void MainWindow::stopActionTriggered()
     if (currentMode == AddNewPolygon)
     {
         QGraphicsPolygonItem *obstacle = new QGraphicsPolygonItem(newPolygonPath->path().toFillPolygon());
-        obstacle->setPen(QPen(Qt::red));
+        obstacle->setPen(Style::obstaclePen);
+        obstacle->setBrush(Style::obstacleBrush);
         obstacleGroup->addToGroup(obstacle);
 
         newPolygonPath->setPath(QPainterPath());
