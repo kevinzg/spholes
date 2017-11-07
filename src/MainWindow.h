@@ -17,6 +17,7 @@ private:
     View *view;
 
     QActionGroup *actions;
+    QAction *stopAction;
 
     void setupGraphicView();
     void setupGraphicItems();
@@ -24,6 +25,7 @@ private:
     void setupToolBar();
 
     void clearInteractionMode();
+    void addPointToNewPolygon(QPointF);
 
     enum InteractionMode
     {
@@ -38,12 +40,17 @@ private:
     PointItem *startPoint;
     PointItem *destinationPoint;
 
+    QGraphicsItemGroup *newPolygon;
+    PointItem *newPolygonStartPoint;
+    QGraphicsPathItem *newPolygonPath;
+
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
 public slots:
     void changeInteractionMode(QAction *);
+    void stopActionTriggered();
     void scenePointClicked(QPointF);
 };
 
