@@ -72,6 +72,12 @@ void MainWindow::setupToolBar()
     toolBar->addActions(actions->actions());
 }
 
+void MainWindow::clearInteractionMode()
+{
+    actions->checkedAction()->setChecked(false);
+    currentMode = NoInteraction;
+}
+
 void MainWindow::changeInteractionMode(QAction *action)
 {
     currentMode = static_cast<InteractionMode>(action->data().value<int>());
@@ -84,10 +90,12 @@ void MainWindow::scenePointClicked(QPointF point)
     case SetStart:
         startPoint->setPos(point);
         startPoint->setVisible(true);
+        clearInteractionMode();
         break;
     case SetDestination:
         destinationPoint->setPos(point);
         destinationPoint->setVisible(true);
+        clearInteractionMode();
         break;
     case NoInteraction:
     default:

@@ -23,6 +23,8 @@ private:
     void setupActions();
     void setupToolBar();
 
+    void clearInteractionMode();
+
     enum InteractionMode
     {
         NoInteraction,
