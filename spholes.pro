@@ -38,7 +38,9 @@ HEADERS += \
     src/View.h \
     src/Scene.h \
     src/PointItem.h \
-    src/Style.h
+    src/Style.h \
+    src/spholes/Point.h \
+    src/spholes/Common.h
 
 RESOURCES += \
     resources/images.qrc
