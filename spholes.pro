@@ -40,7 +40,9 @@ HEADERS += \
     src/PointItem.h \
     src/Style.h \
     src/spholes/Point.h \
-    src/spholes/Common.h
+    src/spholes/Common.h \
+    src/spholes/Polygon.h \
+    src/spholes/LineSegment.h
 
 RESOURCES += \
     resources/images.qrc
