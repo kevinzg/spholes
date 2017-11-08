@@ -31,7 +31,8 @@ SOURCES += \
     src/View.cpp \
     src/Scene.cpp \
     src/PointItem.cpp \
-    src/Style.cpp
+    src/Style.cpp \
+    src/spholes/ShortestPath.cpp
 
 HEADERS += \
     src/MainWindow.h \
@@ -42,7 +43,9 @@ HEADERS += \
     src/spholes/Point.h \
     src/spholes/Common.h \
     src/spholes/Polygon.h \
-    src/spholes/LineSegment.h
+    src/spholes/LineSegment.h \
+    src/spholes/ShortestPath.h \
+    src/spholes/Path.h
 
 RESOURCES += \
     resources/images.qrc
