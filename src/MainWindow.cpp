@@ -57,10 +57,14 @@ void MainWindow::setupGraphicItems()
     newPolygon->addToGroup(newPolygonStartPoint);
     newPolygon->addToGroup(newPolygonPath);
 
+    shortestPath = new QGraphicsPathItem;
+    shortestPath->setPen(Style::shortestPathPen);
+
     scene->addItem(startPoint);
     scene->addItem(destinationPoint);
     scene->addItem(obstacleGroup);
     scene->addItem(newPolygon);
+    scene->addItem(shortestPath);
 }
 
 void MainWindow::setupActions()
@@ -144,6 +148,20 @@ void MainWindow::addPointToNewPolygon(QPointF point)
         polygonPath.lineTo(point);
 
     newPolygonPath->setPath(polygonPath);
+}
+
+void MainWindow::drawShortestPath(const spholes::Path &path)
+{
+    if (path.size() < 2) return;
+
+    QPainterPath painterPath;
+
+    painterPath.moveTo(path[0].x(), path[0].y());
+
+    for (size_t i = 1; i < path.size(); ++i)
+        painterPath.lineTo(path[i].x(), path[i].y());
+
+    shortestPath->setPath(painterPath);
 }
 
 void MainWindow::changeInteractionMode(QAction *action)

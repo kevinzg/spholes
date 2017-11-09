@@ -16,6 +16,8 @@ public:
 
     static const QColor newPolygonStartPointColor;
     static const QPen newPolygonPen;
+
+    static const QPen shortestPathPen;
 };
 
 #endif // STYLE_H

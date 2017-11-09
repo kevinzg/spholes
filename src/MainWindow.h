@@ -5,6 +5,7 @@
 #include "View.h"
 #include "Scene.h"
 #include "PointItem.h"
+#include "spholes/Path.h"
 
 class QActionGroup;
 
@@ -29,6 +30,8 @@ private:
     void clearInteractionMode();
     void addPointToNewPolygon(QPointF);
 
+    void drawShortestPath(const spholes::Path &);
+
     enum InteractionMode
     {
         NoInteraction,
@@ -47,6 +50,8 @@ private:
     QGraphicsItemGroup *newPolygon;
     PointItem *newPolygonStartPoint;
     QGraphicsPathItem *newPolygonPath;
+
+    QGraphicsPathItem *shortestPath;
 
 public:
     MainWindow(QWidget *parent = 0);

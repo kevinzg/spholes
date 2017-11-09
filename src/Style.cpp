@@ -8,3 +8,5 @@ const QBrush Style::obstacleBrush = QBrush(QColor(79, 139, 201, 128));
 
 const QColor Style::newPolygonStartPointColor = QColor(63, 111, 160);
 const QPen Style::newPolygonPen = QPen(QColor(63, 111, 160));
+
+const QPen Style::shortestPathPen = QPen(QBrush(), 1, Qt::DashLine);
