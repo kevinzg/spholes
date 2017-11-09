@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "View.h"
 #include "Style.h"
+#include "spholes/ShortestPath.h"
 
 #include <QToolBar>
 #include <QAction>
@@ -96,6 +97,12 @@ void MainWindow::setupActions()
 
     connect(cancelAction, &QAction::triggered,
             this, &MainWindow::cancelActionTriggered);
+
+    solveAction = new QAction(tr("Solve"), this);
+    solveAction->setEnabled(false);
+
+    connect(solveAction, &QAction::triggered,
+            this, &MainWindow::solveActionTriggered);
 }
 
 void MainWindow::setupToolBar()
@@ -106,14 +113,18 @@ void MainWindow::setupToolBar()
     toolBar->addActions(actions->actions());
     toolBar->addAction(stopAction);
     toolBar->addAction(cancelAction);
+    toolBar->addSeparator();
+    toolBar->addAction(solveAction);
 }
 
 void MainWindow::clearInteractionMode()
 {
     actions->checkedAction()->setChecked(false);
     actions->setEnabled(true);
+
     stopAction->setEnabled(false);
     cancelAction->setEnabled(false);
+    solveAction->setEnabled(startPoint->isVisible() && destinationPoint->isVisible());
 
     newPolygon->setVisible(false);
 
@@ -138,8 +149,11 @@ void MainWindow::addPointToNewPolygon(QPointF point)
 void MainWindow::changeInteractionMode(QAction *action)
 {
     currentMode = static_cast<InteractionMode>(action->data().value<int>());
+
     actions->setEnabled(false);
+    solveAction->setEnabled(false);
     cancelAction->setEnabled(true);
+
     if (currentMode == AddNewPolygon)
         stopAction->setEnabled(true);
 }
@@ -165,6 +179,28 @@ void MainWindow::cancelActionTriggered()
         newPolygonPath->setPath(QPainterPath());
 
     clearInteractionMode();
+}
+
+void MainWindow::solveActionTriggered()
+{
+    spholes::Point start(startPoint->pos().x(), startPoint->pos().y());
+    spholes::Point destination(destinationPoint->pos().x(), destinationPoint->pos().y());
+    std::vector<spholes::Polygon> obstacles;
+
+    foreach (QGraphicsItem *item, obstacleGroup->childItems())
+    {
+        QGraphicsPolygonItem *graphicsPolygon = dynamic_cast<QGraphicsPolygonItem *>(item);
+
+        if (!graphicsPolygon)
+            continue;
+
+        obstacles.push_back(spholes::Polygon());
+
+        foreach (const QPointF &point, graphicsPolygon->polygon())
+            obstacles.rbegin()->push_back(spholes::Point(point.x(), point.y()));
+    }
+
+    spholes::Path solution = spholes::ShortestPath::find(start, destination, obstacles);
 }
 
 void MainWindow::scenePointClicked(QPointF point)

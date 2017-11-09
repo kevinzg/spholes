@@ -19,6 +19,7 @@ private:
     QActionGroup *actions;
     QAction *stopAction;
     QAction *cancelAction;
+    QAction *solveAction;
 
     void setupGraphicView();
     void setupGraphicItems();
@@ -55,6 +56,7 @@ public slots:
     void changeInteractionMode(QAction *);
     void stopActionTriggered();
     void cancelActionTriggered();
+    void solveActionTriggered();
     void scenePointClicked(QPointF);
 };
 
