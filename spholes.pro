@@ -45,7 +45,8 @@ HEADERS += \
     src/spholes/Polygon.h \
     src/spholes/LineSegment.h \
     src/spholes/ShortestPath.h \
-    src/spholes/Path.h
+    src/spholes/Path.h \
+    src/spholes/Hash.h
 
 RESOURCES += \
     resources/images.qrc
