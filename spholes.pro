@@ -32,7 +32,8 @@ SOURCES += \
     src/Scene.cpp \
     src/PointItem.cpp \
     src/Style.cpp \
-    src/spholes/ShortestPath.cpp
+    src/spholes/ShortestPath.cpp \
+    src/spholes/VisibilityGraph.cpp
 
 HEADERS += \
     src/MainWindow.h \
@@ -47,7 +48,8 @@ HEADERS += \
     src/spholes/ShortestPath.h \
     src/spholes/Path.h \
     src/spholes/Hash.h \
-    src/spholes/Graph.h
+    src/spholes/Graph.h \
+    src/spholes/VisibilityGraph.h
 
 RESOURCES += \
     resources/images.qrc
