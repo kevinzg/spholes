@@ -2,3 +2,4 @@
 #include "catch.hpp"
 
 #include "TestPoint.h"
+#include "TestLineSegment.h"
