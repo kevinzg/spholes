@@ -11,11 +11,12 @@ all: default
 
 OBJECTS = $(patsubst $(SRCDIR)/%.cpp, %.o, $(wildcard $(SRCDIR)/*.cpp)) main.o
 HEADERS = $(wildcard $(INCDIR)/*.h)
+TESTS = $(wildcard *.h)
 
 %.o: $(SRCDIR)/%.cpp $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-main.o: main.cpp $(HEADERS) catch.hpp
+main.o: main.cpp $(HEADERS) $(TESTS) catch.hpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 catch.hpp:
