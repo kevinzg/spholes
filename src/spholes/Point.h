@@ -26,6 +26,15 @@ static real dotProduct(const Point &a, const Point &b)
     return a.x() * b.x() + a.y() * b.y();
 }
 
+class PolarPoint : public std::complex<real>
+{
+public:
+    PolarPoint() {}
+    PolarPoint(spholes::real angle, spholes::real radius) : std::complex<spholes::real> (angle, radius) {}
+    inline spholes::real angle() const { return this->real(); }
+    inline spholes::real radius() const { return this->imag(); }
+};
+
 }
 
 #endif // SPHOLES_POINT_H
