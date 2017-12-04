@@ -1,9 +1,37 @@
 #include "VisibilityGraph.h"
 
+#include <algorithm>
+
 namespace spholes {
 
 std::vector<Point> VisibilityGraph::visibleVertices(const Point &p, const std::vector<Polygon> &obstacles)
 {
+    std::vector<std::pair<PointRef, PolarPoint>> points;
+
+    size_t globalPointCounter = 0;
+
+    for (auto it = obstacles.begin(); it != obstacles.end(); ++it)
+    {
+        const Polygon &polygon = *it;
+        for (auto pointIt = polygon.begin(); pointIt != polygon.end(); ++pointIt)
+        {
+            points.push_back(std::make_pair(PointRef({static_cast<size_t>(std::distance(obstacles.begin(), it)),
+                                                      static_cast<size_t>(std::distance(polygon.begin(), pointIt)),
+                                                      globalPointCounter++}),
+                                            makePolarPoint(p, *pointIt)));
+        }
+    }
+
+    std::sort(points.begin(), points.end(), [](const auto &a, const auto &b) {
+        if (a.second.angle() != b.second.angle())
+            return a.second.angle() < b.second.angle();
+
+        if (a.second.radius() != b.second.radius())
+            return a.second.radius() != b.second.radius();
+
+        return a.first.globalPointId < b.first.globalPointId;
+    });
+
     return std::vector<Point>();
 }
 
@@ -11,6 +39,14 @@ void VisibilityGraph::addEdgesToGraph(Graph<Point> &graph, const Point &vertex, 
 {
     for (auto it = vertices.begin(); it != vertices.end(); ++it)
         graph.addEdge(vertex, *it);
+}
+
+PolarPoint VisibilityGraph::makePolarPoint(const Point &center, const Point &point)
+{
+    Point translatedPoint = point - center;
+
+    return PolarPoint(std::atan2(translatedPoint.y(), translatedPoint.x()),
+                      std::hypot(translatedPoint.x(), translatedPoint.y()));
 }
 
 Graph<Point> VisibilityGraph::find(const Point &start, const Point &destination, const std::vector<Polygon> &obstacles)
