@@ -16,12 +16,12 @@ public:
     inline spholes::real y() const { return this->imag(); }
 };
 
-static real crossProduct(const Point &a, const Point &b)
+static inline real crossProduct(const Point &a, const Point &b)
 {
     return a.x() * b.y() - a.y() * b.x();
 }
 
-static real dotProduct(const Point &a, const Point &b)
+static inline real dotProduct(const Point &a, const Point &b)
 {
     return a.x() * b.x() + a.y() * b.y();
 }
