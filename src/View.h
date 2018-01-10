@@ -85,6 +85,9 @@ public:
 
     QGraphicsView *view() const;
 
+    void setAntialiasing(bool enabled);
+    void setDragMode(bool enabled);
+
 public slots:
     void zoomIn(int level = 1);
     void zoomOut(int level = 1);

@@ -7,6 +7,10 @@
 #include <QAction>
 #include <QActionGroup>
 
+const qreal MainWindow::SCENE_BOX_RADIUS = 1e3;
+const QRectF MainWindow::SCENE_RECT = QRectF(QPointF(-SCENE_BOX_RADIUS, -SCENE_BOX_RADIUS),
+                                             QPointF(SCENE_BOX_RADIUS, SCENE_BOX_RADIUS));
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       currentMode(InteractionMode::NoInteraction)
@@ -24,9 +28,11 @@ MainWindow::~MainWindow()
 void MainWindow::setupGraphicView()
 {
     scene = new Scene(this);
+    scene->setSceneRect(SCENE_RECT);
 
     view = new View(tr("Euclidean Shortest Path"), this);
     view->view()->setScene(scene);
+    view->setAntialiasing(true);
     this->setCentralWidget(view);
 
     connect(scene, &Scene::pointClicked,
@@ -171,6 +177,8 @@ void MainWindow::changeInteractionMode(QAction *action)
     actions->setEnabled(false);
     solveAction->setEnabled(false);
     cancelAction->setEnabled(true);
+
+    view->setDragMode(false);
 
     if (currentMode == AddNewPolygon)
         stopAction->setEnabled(true);

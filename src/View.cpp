@@ -215,6 +215,17 @@ QGraphicsView *View::view() const
     return static_cast<QGraphicsView *>(graphicsView);
 }
 
+void View::setAntialiasing(bool enabled)
+{
+    antialiasButton->setChecked(enabled);
+}
+
+void View::setDragMode(bool enabled)
+{
+    selectModeButton->setChecked(!enabled);
+    dragModeButton->setChecked(enabled);
+}
+
 void View::resetView()
 {
     zoomSlider->setValue(250);

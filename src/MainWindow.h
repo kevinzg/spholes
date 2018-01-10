@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QRectF>
 #include "View.h"
 #include "Scene.h"
 #include "PointItem.h"
@@ -12,6 +13,9 @@ class QActionGroup;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+    static const qreal SCENE_BOX_RADIUS;
+    static const QRectF SCENE_RECT;
 
 private:
     Scene *scene;
