@@ -27,7 +27,7 @@ std::vector<Point> VisibilityGraph::visibleVertices(const Point &p, const std::v
             return a.second.angle() < b.second.angle();
 
         if (a.second.radius() != b.second.radius())
-            return a.second.radius() != b.second.radius();
+            return a.second.radius() < b.second.radius();
 
         return a.first.globalPointId < b.first.globalPointId;
     });
