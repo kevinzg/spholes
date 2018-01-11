@@ -32,6 +32,21 @@ std::vector<Point> VisibilityGraph::visibleVertices(const Point &p, const std::v
         return a.first.globalPointId < b.first.globalPointId;
     });
 
+    std::vector<LineSegmentRef> lineSegments(points.size());
+
+    for (auto pointIt = points.begin(); pointIt != points.end(); ++pointIt)
+    {
+        size_t polarPointId = static_cast<size_t>(std::distance(points.begin(), pointIt));
+
+        size_t cwLineSegment = pointIt->first.globalPointId;
+        size_t ccwLineSegment = pointIt->first.localPointId > 0 ?
+                    pointIt->first.globalPointId - 1 :
+                    pointIt->first.globalPointId + obstacles[pointIt->first.polygonId].size() - 1;
+
+        lineSegments[cwLineSegment].polarPointAId = polarPointId;
+        lineSegments[ccwLineSegment].polarPointBId = polarPointId;
+    }
+
     return std::vector<Point>();
 }
 
