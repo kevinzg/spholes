@@ -188,10 +188,18 @@ void MainWindow::stopActionTriggered()
 {
     if (currentMode == AddNewPolygon)
     {
-        QGraphicsPolygonItem *obstacle = new QGraphicsPolygonItem(newPolygonPath->path().toFillPolygon());
-        obstacle->setPen(Style::obstaclePen);
-        obstacle->setBrush(Style::obstacleBrush);
-        obstacleGroup->addToGroup(obstacle);
+        QPolygonF polygon = newPolygonPath->path().toFillPolygon();
+
+        // QPainterPath::toFillPolygon adds extra point at the end.
+        if (polygon.size() >= 4)
+        {
+            polygon.pop_back();
+
+            QGraphicsPolygonItem *obstacle = new QGraphicsPolygonItem(polygon);
+            obstacle->setPen(Style::obstaclePen);
+            obstacle->setBrush(Style::obstacleBrush);
+            obstacleGroup->addToGroup(obstacle);
+        }
 
         newPolygonPath->setPath(QPainterPath());
     }
