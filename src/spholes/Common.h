@@ -8,6 +8,7 @@ namespace spholes {
 typedef double real;
 
 const real EPS = 1e-9;
+const real INF = 1e9;
 const real PI = 2 * std::acos(0);
 
 static inline bool approx(real a, real b)
