@@ -21,6 +21,12 @@ class VisibilityGraph
         size_t globalPointId;
     };
 
+    struct LineSegmentRef
+    {
+        size_t polarPointAId;
+        size_t polarPointBId;
+    };
+
     static PolarPoint makePolarPoint(const Point &center, const Point &point);
 
 public:
