@@ -13,8 +13,14 @@ public:
     LineSegment() {}
     LineSegment(const Point &a, const Point &b) : std::pair<Point, Point> (a, b) {}
 
+    enum IntersectionMode
+    {
+        NoIntersection,
+        PointIntersection,
+        SegmentIntersection
+    };
 
-    static bool intersection(const LineSegment &a, const LineSegment &b, Point &p, Point &q)
+    static IntersectionMode intersection(const LineSegment &a, const LineSegment &b, Point &p, Point &q)
     {
         Point dirA = a.second - a.first;
         Point dirB = b.second - b.first;
@@ -36,16 +42,16 @@ public:
             t = std::min(t, 1.0);
 
             if (s > 1.0 || t < 0.0)
-                return false;
+                return NoIntersection;
 
             p = a.first + dirA * s;
             q = a.first + dirA * t;
 
-            return true;
+            return SegmentIntersection;
         }
         if (approx(crossProductAB, 0.0))
         {
-            return false;
+            return NoIntersection;
         }
 
         real s = crossProduct(dirAB, dirB) / crossProductAB;
@@ -56,10 +62,10 @@ public:
             p = a.first + dirA * s;
             q = b.first + dirB * t;
 
-            return true;
+            return PointIntersection;
         }
 
-        return false;
+        return NoIntersection;
     }
 };
 
