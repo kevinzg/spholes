@@ -25,35 +25,37 @@ TEST_CASE("line segment intersection", "[line-segment]")
     SECTION("parallel not intersecting lines")
     {
         Point s, t;
-        bool doIntersect = LineSegment::intersection(a, b, s, t);
 
-        REQUIRE_FALSE(doIntersect);
+        LineSegment::IntersectionMode intersection = LineSegment::intersection(a, b, s, t);
+
+        REQUIRE(intersection == LineSegment::IntersectionMode::NoIntersection);
     }
 
     SECTION("collinear intersecting lines")
     {
         Point s, t;
-        bool doIntersect = LineSegment::intersection(a, c0, s, t);
 
-        REQUIRE(doIntersect);
+        LineSegment::IntersectionMode intersection = LineSegment::intersection(a, c0, s, t);
+
+        REQUIRE(intersection == LineSegment::IntersectionMode::SegmentIntersection);
         REQUIRE(s == a.first);
         REQUIRE(t == a.second);
 
-        doIntersect = LineSegment::intersection(a, c1, s, t);
+        intersection = LineSegment::intersection(a, c1, s, t);
 
-        REQUIRE(doIntersect);
+        REQUIRE(intersection == LineSegment::IntersectionMode::SegmentIntersection);
         REQUIRE(s == c1.first);
         REQUIRE(t == c1.second);
 
-        doIntersect = LineSegment::intersection(a, c2, s, t);
+        intersection = LineSegment::intersection(a, c2, s, t);
 
-        REQUIRE(doIntersect);
+        REQUIRE(intersection == LineSegment::IntersectionMode::SegmentIntersection);
         REQUIRE(s == a.first);
         REQUIRE(t == c2.second);
 
-        doIntersect = LineSegment::intersection(a, c3, s, t);
+        intersection = LineSegment::intersection(a, c3, s, t);
 
-        REQUIRE(doIntersect);
+        REQUIRE(intersection == LineSegment::IntersectionMode::SegmentIntersection);
         REQUIRE(s == c3.first);
         REQUIRE(t == a.second);
     }
@@ -61,28 +63,31 @@ TEST_CASE("line segment intersection", "[line-segment]")
     SECTION("collinear not intersecting lines")
     {
         Point s, t;
-        bool doIntersect = LineSegment::intersection(a, c4, s, t);
 
-        REQUIRE_FALSE(doIntersect);
+        LineSegment::IntersectionMode intersection = LineSegment::intersection(a, c4, s, t);
+
+        REQUIRE(intersection == LineSegment::IntersectionMode::NoIntersection);
     }
 
     SECTION("non-parallel intersecting lines")
     {
         Point s, t;
-        bool doIntersect = LineSegment::intersection(a, d, s, t);
 
-        REQUIRE(doIntersect);
+        LineSegment::IntersectionMode intersection = LineSegment::intersection(a, d, s, t);
+
+        REQUIRE(intersection == LineSegment::IntersectionMode::PointIntersection);
         REQUIRE(s == Point());
         REQUIRE(t == Point());
 
-        doIntersect = LineSegment::intersection(a, e, s, t);
+        intersection = LineSegment::intersection(a, e, s, t);
 
-        REQUIRE(doIntersect);
+        REQUIRE(intersection == LineSegment::IntersectionMode::PointIntersection);
         REQUIRE(s == Point());
         REQUIRE(t == Point());
 
-        doIntersect = LineSegment::intersection(a, f, s, t);
-        REQUIRE(doIntersect);
+        intersection = LineSegment::intersection(a, f, s, t);
+
+        REQUIRE(intersection == LineSegment::IntersectionMode::PointIntersection);
         REQUIRE(s == a.first);
         REQUIRE(t == f.first);
     }
