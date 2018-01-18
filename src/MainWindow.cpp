@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "View.h"
 #include "Style.h"
+#include "spholes/VisibilityGraph.h"
 #include "spholes/ShortestPath.h"
 
 #include <QToolBar>
@@ -66,11 +67,14 @@ void MainWindow::setupGraphicItems()
     shortestPath = new QGraphicsPathItem;
     shortestPath->setPen(Style::shortestPathPen);
 
+    visibilityGraph = new QGraphicsItemGroup;
+
     scene->addItem(startPoint);
     scene->addItem(destinationPoint);
     scene->addItem(obstacleGroup);
     scene->addItem(newPolygon);
     scene->addItem(shortestPath);
+    scene->addItem(visibilityGraph);
 }
 
 void MainWindow::setupActions()
@@ -156,6 +160,28 @@ void MainWindow::addPointToNewPolygon(QPointF point)
     newPolygonPath->setPath(polygonPath);
 }
 
+void MainWindow::drawVisibilityGraph(const spholes::Graph<spholes::Point> &graph)
+{
+    scene->removeItem(visibilityGraph);
+    delete visibilityGraph;
+
+    visibilityGraph = new QGraphicsItemGroup;
+
+    for (auto uIt = graph.begin(); uIt != graph.end(); ++uIt)
+    {
+        const spholes::Point &u = uIt->first;
+        for (auto vIt = uIt->second.begin(); vIt != uIt->second.end(); vIt++)
+        {
+            const spholes::Point &v = *vIt;
+
+            QGraphicsLineItem *edge = new QGraphicsLineItem(u.x(), u.y(), v.x(), v.y());
+            edge->setPen(Style::shortestPathPen);
+            visibilityGraph->addToGroup(edge);
+        }
+    }
+    scene->addItem(visibilityGraph);
+}
+
 void MainWindow::drawShortestPath(const spholes::Path &path)
 {
     if (path.size() < 2) return;
@@ -234,7 +260,8 @@ void MainWindow::solveActionTriggered()
             obstacles.rbegin()->push_back(spholes::Point(point.x(), point.y()));
     }
 
-    spholes::Path solution = spholes::ShortestPath::find(start, destination, obstacles);
+    auto graph = spholes::VisibilityGraph::find(start, destination, obstacles);
+    drawVisibilityGraph(graph);
 }
 
 void MainWindow::scenePointClicked(QPointF point)

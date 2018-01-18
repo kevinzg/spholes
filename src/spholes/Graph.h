@@ -15,6 +15,8 @@ public:
     Graph();
 
     void addEdge(const V &a, const V &b);
+    inline auto begin() const { return adjacencyLists.begin(); }
+    inline auto end() const { return adjacencyLists.end(); }
 };
 
 template <typename V>
