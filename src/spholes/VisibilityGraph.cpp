@@ -267,10 +267,14 @@ std::vector<Point> VisibilityGraph::visibleVertices(const Point &pivot, const st
     return visiblePoints;
 }
 
-void VisibilityGraph::addEdgesToGraph(Graph<Point> &graph, const Point &vertex, const std::vector<Point> &vertices)
+void VisibilityGraph::addEdgesToGraph(Graph<Point> &graph, const Point &vertex, const std::vector<Point> &vertices, bool mirror = false)
 {
     for (auto it = vertices.begin(); it != vertices.end(); ++it)
+    {
         graph.addEdge(vertex, *it);
+        if (mirror)
+            graph.addEdge(*it, vertex);
+    }
 }
 
 Graph<Point> VisibilityGraph::find(const Point &start, const Point &destination, const std::vector<Polygon> &obstacles)
@@ -279,8 +283,8 @@ Graph<Point> VisibilityGraph::find(const Point &start, const Point &destination,
 
     PointRef externPoint = { obstacles.size(), 0, 0 };
 
-    addEdgesToGraph(graph, start, visibleVertices(start, obstacles, externPoint));
-    addEdgesToGraph(graph, destination, visibleVertices(destination, obstacles, externPoint));
+    addEdgesToGraph(graph, start, visibleVertices(start, obstacles, externPoint), true);
+    addEdgesToGraph(graph, destination, visibleVertices(destination, obstacles, externPoint), true);
 
     size_t pointCounter = 0;
 
