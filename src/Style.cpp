@@ -10,3 +10,4 @@ const QColor Style::newPolygonStartPointColor = QColor(63, 111, 160);
 const QPen Style::newPolygonPen = QPen(QColor(63, 111, 160));
 
 const QPen Style::shortestPathPen = QPen(QBrush(), 1, Qt::DashLine);
+const QPen Style::visibilityGraphPen = QPen(QBrush(QColor(89, 92, 102)), 0.5, Qt::DashLine);

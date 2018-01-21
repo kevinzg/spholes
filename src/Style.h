@@ -18,6 +18,7 @@ public:
     static const QPen newPolygonPen;
 
     static const QPen shortestPathPen;
+    static const QPen visibilityGraphPen;
 };
 
 #endif // STYLE_H

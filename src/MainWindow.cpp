@@ -175,7 +175,7 @@ void MainWindow::drawVisibilityGraph(const spholes::Graph<spholes::Point> &graph
             const spholes::Point &v = *vIt;
 
             QGraphicsLineItem *edge = new QGraphicsLineItem(u.x(), u.y(), v.x(), v.y());
-            edge->setPen(Style::shortestPathPen);
+            edge->setPen(Style::visibilityGraphPen);
             visibilityGraph->addToGroup(edge);
         }
     }
