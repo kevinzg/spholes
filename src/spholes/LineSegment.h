@@ -41,7 +41,7 @@ public:
             s = std::max(s, 0.0);
             t = std::min(t, 1.0);
 
-            if (s > 1.0 || t < 0.0)
+            if (s > 1.0 + EPS || t < 0.0 - EPS)
                 return NoIntersection;
 
             p = a.first + dirA * s;
@@ -57,7 +57,7 @@ public:
         real s = crossProduct(dirAB, dirB) / crossProductAB;
         real t = crossProduct(dirAB, dirA) / crossProductAB;
 
-        if (s >= 0.0 && s <= 1.0 && t >= 0.0 && t <= 1.0)
+        if (s >= 0.0 - EPS && s <= 1.0 + EPS && t >= 0.0 - EPS && t <= 1.0 + EPS)
         {
             p = a.first + dirA * s;
             q = b.first + dirB * t;
