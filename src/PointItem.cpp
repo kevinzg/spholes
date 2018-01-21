@@ -3,7 +3,7 @@
 #include <QBrush>
 #include <QPen>
 
-const qreal PointItem::defaultRadius = 3.0;
+const qreal PointItem::defaultRadius = 5.0;
 
 PointItem::PointItem(QGraphicsItem *parent)
     : QGraphicsEllipseItem(parent)
