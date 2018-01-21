@@ -23,6 +23,7 @@ class VisibilityGraph
 
     struct LineSegmentRef
     {
+        size_t lineSegmentId;
         size_t polarPointAId;
         size_t polarPointBId;
     };
