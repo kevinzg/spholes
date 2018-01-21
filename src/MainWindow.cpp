@@ -258,6 +258,9 @@ void MainWindow::solveActionTriggered()
 
         foreach (const QPointF &point, graphicsPolygon->polygon())
             obstacles.rbegin()->push_back(spholes::Point(point.x(), point.y()));
+
+        // Reversing because Qt Y axis is flipped and the algorithm expects clockwise obstacles.
+        std::reverse(obstacles.rbegin()->begin(), obstacles.rbegin()->end());
     }
 
     auto graph = spholes::VisibilityGraph::find(start, destination, obstacles);
