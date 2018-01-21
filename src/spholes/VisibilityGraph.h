@@ -11,7 +11,9 @@ namespace spholes {
 
 class VisibilityGraph
 {
-    static std::vector<Point> visibleVertices(const Point &p, const std::vector<Polygon> &obstacles);
+    struct PointRef;
+
+    static std::vector<Point> visibleVertices(const Point &pivot, const std::vector<Polygon> &obstacles, PointRef pivotRef);
     static void addEdgesToGraph(Graph<Point> &graph, const Point &vertex, const std::vector<Point> &vertices);
 
     struct PointRef
