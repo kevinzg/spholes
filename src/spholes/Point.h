@@ -17,6 +17,13 @@ public:
     inline spholes::real x() const { return this->real(); }
     inline spholes::real y() const { return this->imag(); }
     inline PolarPoint toPolarPoint() const;
+
+    inline bool operator< (const Point &b) const
+    {
+        if (this->x() != b.x())
+            return this->x() < b.x();
+        return this->y() < b.y();
+    }
 };
 
 static inline real crossProduct(const Point &a, const Point &b)
