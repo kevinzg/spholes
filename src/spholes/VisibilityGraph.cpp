@@ -267,6 +267,34 @@ std::vector<Point> VisibilityGraph::visibleVertices(const Point &pivot, const st
     return visiblePoints;
 }
 
+bool VisibilityGraph::areVisible(const Point &p1, const Point &p2, const std::vector<Polygon> &obstacles)
+{
+    LineSegment visionLine(p1, p2);
+    bool visible = true;
+
+    for (auto it = obstacles.begin(); visible && it != obstacles.end(); ++it)
+    {
+        const Polygon &polygon = *it;
+        for (auto pointIt = polygon.begin(); pointIt != polygon.end(); ++pointIt)
+        {
+            auto otherPointIt = pointIt + 1 == polygon.end() ? polygon.begin() : pointIt + 1;
+            LineSegment edge(*pointIt, *otherPointIt);
+
+            Point p, q;
+
+            if (LineSegment::intersection(visionLine, edge, p, q) == LineSegment::IntersectionMode::PointIntersection)
+            {
+                bool pointIntersection = approx(p.x(), pointIt->x()) && approx(p.y(), pointIt->y());
+                bool otherPointIntersection = approx(p.x(), otherPointIt->x()) && approx(p.y(), otherPointIt->y());
+
+                visible = pointIntersection || otherPointIntersection;
+            }
+        }
+    }
+
+    return visible;
+}
+
 void VisibilityGraph::addEdgesToGraph(Graph<Point> &graph, const Point &vertex, const std::vector<Point> &vertices, bool mirror = false)
 {
     for (auto it = vertices.begin(); it != vertices.end(); ++it)
@@ -301,6 +329,12 @@ Graph<Point> VisibilityGraph::find(const Point &start, const Point &destination,
             };
             addEdgesToGraph(graph, *point, visibleVertices(*point, obstacles, ref));
         }
+    }
+
+    if (areVisible(start, destination, obstacles))
+    {
+        graph.addEdge(start, destination);
+        graph.addEdge(destination, start);
     }
 
     return graph;

@@ -14,6 +14,8 @@ class VisibilityGraph
     struct PointRef;
 
     static std::vector<Point> visibleVertices(const Point &pivot, const std::vector<Polygon> &obstacles, PointRef pivotRef);
+    static bool areVisible(const Point &p1, const Point &p2, const std::vector<Polygon> &obstacles);
+
     static void addEdgesToGraph(Graph<Point> &graph, const Point &vertex, const std::vector<Point> &vertices, bool mirror);
 
     struct PointRef
