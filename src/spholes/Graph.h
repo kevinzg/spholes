@@ -1,7 +1,7 @@
 #ifndef SPHOLES_GRAPH_H
 #define SPHOLES_GRAPH_H
 
-#include <unordered_map>
+#include <map>
 #include <vector>
 
 namespace spholes {
@@ -9,7 +9,7 @@ namespace spholes {
 template <typename V>
 class Graph
 {
-    std::unordered_map<V, std::vector<V>> adjacencyLists;
+    std::map<V, std::vector<V>> adjacencyLists;
 
 public:
     Graph();
@@ -17,6 +17,7 @@ public:
     void addEdge(const V &a, const V &b);
     inline auto begin() const { return adjacencyLists.begin(); }
     inline auto end() const { return adjacencyLists.end(); }
+    inline const auto & getEdges(const V& p) const { return adjacencyLists.at(p); }
 };
 
 template <typename V>
