@@ -265,6 +265,9 @@ void MainWindow::solveActionTriggered()
 
     auto graph = spholes::VisibilityGraph::find(start, destination, obstacles);
     drawVisibilityGraph(graph);
+
+    auto path = spholes::ShortestPath::find(start, destination, graph);
+    drawShortestPath(path);
 }
 
 void MainWindow::scenePointClicked(QPointF point)

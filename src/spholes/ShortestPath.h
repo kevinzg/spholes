@@ -6,13 +6,21 @@
 #include "Point.h"
 #include "Polygon.h"
 #include "Path.h"
+#include "Graph.h"
 
 namespace spholes {
 
 class ShortestPath
 {
+    struct SPNode
+    {
+        real distance;
+        Point point;
+        Point parent;
+    };
+
 public:
-    static Path find(const Point &start, const Point &destination, const std::vector<Polygon> &obstacles);
+    static Path find(const Point &start, const Point &destination, const Graph<Point> &visibilityGraph);
 };
 
 }
