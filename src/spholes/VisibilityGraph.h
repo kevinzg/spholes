@@ -27,8 +27,6 @@ class VisibilityGraph
         size_t polarPointBId;
     };
 
-    static PolarPoint makePolarPoint(const Point &center, const Point &point);
-
 public:
     static Graph<Point> find(const Point &start, const Point &destination, const std::vector<Polygon> &obstacles);
 };
